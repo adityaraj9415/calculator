@@ -1,0 +1,57 @@
+name: Calculator
+
+on:
+  workflow_dispatch:
+    inputs:
+      num1:
+        description: 'Enter the first number'
+        required: true
+        default: '0'
+      num2:
+        description: 'Enter the second number'
+        required: true
+        default: '0'
+      operator:
+        description: 'Enter the operation '
+        required: true
+        default: ''
+        type: choice
+        options:
+          - '+'
+          - '-'
+          - '*'
+          - '/'
+jobs:
+  calculate_job:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+    - name: Run calculator
+      run: |
+        num1=${{ github.event.inputs.num1 }}
+        num2=${{ github.event.inputs.num2 }}
+        operator=${{ github.event.inputs.operator }}
+        if [ "$operator" = "+" ]; then
+            result=$(echo "$num1 + $num2" | bc)
+        elif [ "$operator" = "-" ]; then
+            result=$(echo "$num1 - $num2" | bc)
+        elif [ "$operator" = "*" ]; then
+            result=$(echo "$num1 * $num2" | bc)
+        elif [ "$operator" = "/" ]; then
+            result=$(echo "$num1 / $num2" | bc)
+        else
+            echo "Invalid operator"
+            exit 1
+        fi
+        echo "Result: $result"
+        echo "::set-output name=result::$result"
+  
+  display_result_job:
+    needs: calculate_job
+    runs-on: ubuntu-latest
+    steps:
+    - name: Display result
+      run: |
+        result=${{ steps.calculator_job.outputs.result }}
+        echo "The result of the calculation is $result"
