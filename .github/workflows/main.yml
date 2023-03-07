@@ -48,7 +48,7 @@ jobs:
             exit 1
         fi
         
-        echo "result=$result" >> &GITHUB_OUTPUT
+        echo "result= $result" >> &GITHUB_OUTPUT
   
   display_result_job:
     needs: calculate_job
