@@ -24,10 +24,12 @@ on:
 jobs:
   calculate_job:
     runs-on: ubuntu-latest
+    outputs: ${{ steps.calculate-output.outputs.result }}
     steps:
     - name: Checkout repository
       uses: actions/checkout@v2
     - name: Run calculator
+      id: calculate-output
       run: |
         num1=${{ github.event.inputs.num1 }}
         num2=${{ github.event.inputs.num2 }}
