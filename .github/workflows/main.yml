@@ -45,7 +45,7 @@ jobs:
             exit 1
         fi
         
-        echo "::set-output name=result::$result"
+        echo "::set-inputs name=result::$result"
   
   display_result_job:
     needs: calculate_job
