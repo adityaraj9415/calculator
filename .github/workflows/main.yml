@@ -48,7 +48,7 @@ jobs:
             exit 1
         fi
         
-        echo "::set-inputs name=result::$result"
+        echo 'result=$result' >> &GITHUB_OUTPUT
   
   display_result_job:
     needs: calculate_job
@@ -56,5 +56,5 @@ jobs:
     steps:
     - name: Display result
       run: |
-        result=${{ needs.calculator-output.outputs.result }}
+        result=${{ needs.calculate_job.outputs.result }}
         echo "The result of the calculation is $result"
