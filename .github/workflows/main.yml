@@ -44,7 +44,7 @@ jobs:
             echo "Invalid operator"
             exit 1
         fi
-        echo "Result: $result"
+        
         echo "::set-output name=result::$result"
   
   display_result_job:
@@ -53,5 +53,5 @@ jobs:
     steps:
     - name: Display result
       run: |
-        result=${{ steps.calculator_job.outputs.result }}
+        result=${{ needs.calculator_job.outputs.result }}
         echo "The result of the calculation is $result"
