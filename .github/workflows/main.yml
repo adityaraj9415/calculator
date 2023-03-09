@@ -1,36 +1,45 @@
 name: Calculator
+
 on:
   workflow_dispatch:
     inputs:
-      number1:
-        description: 'Input for Number 1'
+      num1:
+        description: 'Enter the first number'
         required: true
         type: number
-      number2:
-        description: 'Input for Number 2'
+      num2:
+        description: 'Enter the second number'
         required: true
         type: number
-      operation:
-        description: 'Choose the operation to perform'
+      operator:
+        description: 'Enter the operation '
+        required: true
+        default: ''
         type: choice
-        required: true
         options:
           - '+'
           - '-'
-          - '/'
           - '*'
+          - '/'
 jobs:
-  calculation:
+  calculate_job:
     runs-on: windows-latest
     outputs:
       result: ${{ steps.result-output.outputs.result }}
     steps:
-      -  run: |
-          $result = ${{ inputs.number1 }}${{ inputs.operation }}${{ inputs.number2 }}
-          echo result=$result >> $env:GITHUB_OUTPUT
-         id: result-output
-  display-result:
-    needs: calculation
+    - name: Checkout repository
+      uses: actions/checkout@v2
+    - name: Run calculator
+      run: |
+        $result = ${{ inputs.num1 }}${{ inputs.operator }}${{ inputs.num2 }}
+        echo result=$result >> $env:GITHUB_OUTPUT
+      id: result-output
+     
+    
+  
+  display_result_job:
+    needs: calculate_job
     runs-on: ubuntu-latest
     steps:
-      - run: echo 'Your result is ${{ needs.calculation.outputs.result }}'
+    - name: Display result
+      run: echo 'Your result is ${{ needs.calculation.outputs.result }}'
