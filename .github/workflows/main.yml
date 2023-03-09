@@ -32,8 +32,8 @@ jobs:
     - name: Run calculator
       run: |
         $result = ${{ inputs.num1 }}${{ inputs.operator }}${{ inputs.num2 }}
-          echo result=$result >> $env:GITHUB_OUTPUT
-         id: calculate-output
+        echo result=$result >> $env:GITHUB_OUTPUT
+      id: calculate-output
      
     
   
