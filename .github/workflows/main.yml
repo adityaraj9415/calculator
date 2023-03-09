@@ -30,31 +30,16 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v2
     - name: Run calculator
-      id: calculate-output
       run: |
-        num1=${{ github.event.inputs.num1 }}
-        num2=${{ github.event.inputs.num2 }}
-        operator=${{ github.event.inputs.operator }}
-        if [ "$operator" = "+" ]; then
-            result=$(echo "$num1 + $num2" | bc)
-        elif [ "$operator" = "-" ]; then
-            result=$(echo "$num1 - $num2" | bc)
-        elif [ "$operator" = "*" ]; then
-            result=$(echo "$num1 * $num2" | bc)
-        elif [ "$operator" = "/" ]; then
-            result=$(echo "$num1 / $num2" | bc)
-        else
-            echo "Invalid operator"
-            exit 1
-        fi
-        
-        echo result= $result >> $env:&GITHUB_OUTPUT
+        $result = ${{ inputs.num1 }}${{ inputs.operator }}${{ inp.number2 }}
+          echo result=$result >> $env:GITHUB_OUTPUT
+         id: calculate-output
+     
+    
   
   display_result_job:
     needs: calculate_job
     runs-on: ubuntu-latest
     steps:
     - name: Display result
-      run: |
-        result=${{ needs.calculate_job.outputs.result }}
-        echo "The result of the calculation is $result"
+      run: echo 'Your result is ${{ needs.calculation.outputs.result }}'
