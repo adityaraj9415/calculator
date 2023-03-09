@@ -30,7 +30,7 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v2
     - name: Run calculator
-      run: |
+    - run: |
         $result = ${{ inputs.num1 }}${{ inputs.operator }}${{ inputs.num2 }}
           echo result=$result >> $env:GITHUB_OUTPUT
          id: calculate-output
