@@ -31,8 +31,8 @@ jobs:
       id: result-output
       run: |
         $result = ${{ inputs.num1 }}${{ inputs.operator }}${{ inputs.num2 }}
-        echo result=$result >> $env:GITHUB_OUTPUT
-      
+        echo "result=$result" >> $env:GITHUB_OUTPUT
+        echo $result
      
     
   
@@ -41,4 +41,4 @@ jobs:
     runs-on: ubuntu-latest
     steps:
 
-      - run: echo 'Result of calculation is ${{ needs.calculation.outputs.result }}'
+      - run: echo 'Result of calculation is ${{ needs.calculate_job.outputs.result }}'
