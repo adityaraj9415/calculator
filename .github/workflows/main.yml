@@ -28,10 +28,11 @@ jobs:
       result: ${{ steps.result-output.outputs.result }}
     steps:
     - name: Run calculator
+      id: result-output
       run: |
         $result = ${{ inputs.num1 }}${{ inputs.operator }}${{ inputs.num2 }}
         echo result=$result >> $env:GITHUB_OUTPUT
-      id: result-output
+      
      
     
   
